@@ -83,13 +83,9 @@
             "protocol": "https",
             "host": "<%= context.domain %>.freshservice.com",
             "path": "/api/v2/workspaces",
-            "query": {
-                "per_page": "30",
-                "page": "<%= context.currentPage %>"
-            },
             "headers": {
                 "Content-Type": "application/json",
-                "Authorization": "Basic <%= encode(context.auth + ':x') %>"
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>"
             }
         }
     },
@@ -143,6 +139,9 @@
             "protocol": "https",
             "host": "<%= context.host %>",
             "path": "/api/v2/ticket_form_fields",
+            "query": {
+                "workspace_id": "<%= context.workspaceId %>"
+            },
             "headers": {
                 "Content-Type": "application/json",
                 "Authorization": "Basic <%= encode(context.apikey + ':x') %>"

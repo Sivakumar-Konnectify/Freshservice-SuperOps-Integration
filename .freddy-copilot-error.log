@@ -1,0 +1,61 @@
+
+      --------------------------------------
+      Error Stack:: "AxiosError: Request failed with status code 400\n\tat Pe (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:353380)\n\tat v.<anonymous> (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:364594)\n\tat v.emit (node:events:531:35)\n\tat v._processResponse (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:60388)\n\tat ClientRequest._onNativeResponse (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:55460)\n\tat Object.onceWrapper (node:events:634:26)\n\tat ClientRequest.emit (node:events:531:35)\n\tat HTTPParser.parserOnIncomingClient [as onIncoming] (node:_http_client:780:27)\n\tat HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\n\tat TLSSocket.socketOnData (node:_http_client:615:22)\n\tat TLSSocket.emit (node:events:519:28)\n\tat addChunk (node:internal/streams/readable:561:12)\n\tat readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n\tat Readable.push (node:internal/streams/readable:392:5)\n\tat TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)\n\tat TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)"
+      Error Message:: "Request failed with status code 400"
+      Error Name:: "AxiosError"
+      Request ID:: 06661a5b-1220-4b31-918e-965fcb08fb4b
+      Tokens Remaining:: 598457
+      Env:: release
+      API Route:: /api/v1/copilot/completions/platform/3
+      
+      
+
+      Timestamp:: Wed, 27 May 2026 11:32:03 GMT
+      Extension Version:: 2.8.4
+      --------------------------------------
+    
+      --------------------------------------
+      Error Stack:: "completions"
+      Error Message:: "Input exceeds the number of allowed tokens: 500. Please reduce the size of your query and try again. If error persists, please reachout to support."
+      
+      
+      
+      
+      
+      
+      
+
+      Timestamp:: Wed, 27 May 2026 11:32:03 GMT
+      Extension Version:: 2.8.4
+      --------------------------------------
+    
+      --------------------------------------
+      Error Stack:: "AxiosError: Request failed with status code 400\n\tat Pe (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:353380)\n\tat v.<anonymous> (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:364594)\n\tat v.emit (node:events:531:35)\n\tat v._processResponse (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:60388)\n\tat ClientRequest._onNativeResponse (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:55460)\n\tat Object.onceWrapper (node:events:634:26)\n\tat ClientRequest.emit (node:events:531:35)\n\tat HTTPParser.parserOnIncomingClient [as onIncoming] (node:_http_client:780:27)\n\tat HTTPParser.parserOnHeadersComplete (node:_http_common:125:17)\n\tat TLSSocket.socketOnData (node:_http_client:615:22)\n\tat TLSSocket.emit (node:events:519:28)\n\tat addChunk (node:internal/streams/readable:561:12)\n\tat readableAddChunkPushByteMode (node:internal/streams/readable:512:3)\n\tat Readable.push (node:internal/streams/readable:392:5)\n\tat TLSWrap.onStreamRead (node:internal/stream_base_commons:189:23)\n\tat TLSWrap.callbackTrampoline (node:internal/async_hooks:130:17)"
+      Error Message:: "Request failed with status code 400"
+      Error Name:: "AxiosError"
+      Request ID:: 5e90bf2e-1768-4077-bc23-d2717c29060d
+      Tokens Remaining:: 598456
+      Env:: release
+      API Route:: /api/v1/copilot/completions/platform/3
+      
+      
+
+      Timestamp:: Wed, 27 May 2026 11:32:28 GMT
+      Extension Version:: 2.8.4
+      --------------------------------------
+    
+      --------------------------------------
+      Error Stack:: "completions"
+      Error Message:: "Input exceeds the number of allowed tokens: 500. Please reduce the size of your query and try again. If error persists, please reachout to support."
+      
+      
+      
+      
+      
+      
+      
+
+      Timestamp:: Wed, 27 May 2026 11:32:28 GMT
+      Extension Version:: 2.8.4
+      --------------------------------------
+    

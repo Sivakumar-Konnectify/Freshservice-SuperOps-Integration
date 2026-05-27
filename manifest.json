@@ -58,5 +58,8 @@
   },
   "scripts": {
     "fdk-unit-test": "vitest run --coverage"
+  },
+  "app": {
+    "tracking_id": "upi1pdvwyaispc212ev4"
   }
 }

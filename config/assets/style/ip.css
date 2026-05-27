@@ -1,3 +1,4 @@
+
 /*  Container grid layout  */
 #ticketFormContainer {
   display: grid;
@@ -328,19 +329,6 @@
   color: #6b7280;
   font-size: 14px;
   grid-column: 1 / -1;
-}
-
-/*  Workspace selector in ticket form tab  */
-#ticketFormWorkspaceHeader {
-  grid-column: 1 / -1;
-  padding-bottom: 16px;
-  margin-bottom: 8px;
-  border-bottom: 1px solid #e5e7eb;
-}
-
-#ticketFormWorkspaceHeader fw-select {
-  width: 100%;
-  max-width: 360px;
 }
 
 /*  Tab area  */

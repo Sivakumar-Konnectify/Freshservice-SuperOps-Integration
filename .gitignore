@@ -1,4 +1,4 @@
-./fdk
-./dist
-./log
-./package.json
+/fdk
+/dist
+/log
+/node_modules

@@ -36,6 +36,11 @@ function buildFieldMapping(ticketForm = {}) {
     schema: ["SUPEROPS_ALERT_ID_{{1:data.id}}"],
   };
 
+  mapping.workspace_id = {
+    type: "string",
+    schema: String(ticketForm.workspace_id || 2),
+  } 
+
   mapping.subject = {
     type: "string",
     schema: mapping?.subject?.schema ? `${mapping.subject.schema} / {{1:data.message}}_#{{1:data.id}}` : `{{1:data.message}}_#{{1:data.id}}`

@@ -29,7 +29,6 @@ const superopsRegionField = document.getElementById("superops-region");
 const sinceDateField = document.getElementById("since-date");
 const siteLocationTab = document.getElementById("site-mapping-tab");
 const ticketFormTab = document.getElementById("ticket-form-tab");
-const workspaceSelect = document.getElementById("ticketFormWorkspaceSelect");
 
 // event listners
 superopsDomainField.addEventListener("fwInputKeyDown", () => {
@@ -90,37 +89,6 @@ freshserviceApikeyField.addEventListener("fwInputClear", () => {
   freshserviceValidateButton.innerText = "Validate";
   validationChecklist.freshservice = false;
 });
-workspaceSelect.addEventListener("fwChange", async (e) => {
-  console.log("event", e);
-  const newWorkspaceId = e.detail?.value || workspaceSelect.value;
-  console.log("new workspace id", newWorkspaceId);
-  if (!newWorkspaceId) return;
-  // Skip the wipe-and-reload during programmatic pre-population
-  // Ignore programmatic changes
-  // const hasNameProperty = Object.keys(e.detail || {}).includes("name");
-  // if (hasNameProperty) {
-  //   return;
-  // }
-  console.log("comparison", selectedWorkspaceId, newWorkspaceId);
-  if (
-    selectedWorkspaceId &&
-    String(selectedWorkspaceId) !== String(newWorkspaceId)
-  ) {
-    clearTicketFormFieldsDOM();
-    ticketForm = undefined;
-    formattedTicketForm = undefined;
-    validationChecklist.ticketForm = false;
-    if (saveFormButton) {
-      saveFormButton.disabled = false;
-      saveFormButton.textContent = "Save Form";
-    }
-  }
-  if(!selectedWorkspaceId || String(selectedWorkspaceId) !== String(newWorkspaceId)){
-    selectedWorkspaceId = newWorkspaceId;
-    await loadTicketFieldsForWorkspace(newWorkspaceId);
-  }
-
-});
 
 // variable declaration
 const freshserviceAppId = "freshservice-1.0.0";
@@ -138,10 +106,8 @@ let isInEditConfig = "";
 let siteSeverityMapping; // to store site mapping
 let ticketForm; // to store ticket form
 let formattedTicketForm;
-let selectedWorkspaceId = null; // to store the selected workspace id for ticket form
 let validatedSuperopsDomain = "";
 let superopsDomainFromIparams = "";
-// let isProgrammaticWorkspaceSet = false;
 const fieldNameConversion = {
   // if want to change the ticket field name to some other to match it with product app input schema
   product: "product_id",
@@ -242,7 +208,6 @@ const severity = [
 let superopsSites = [];
 let fsLocations = [];
 let saveFormButton;
-let workspaceOptions = []; // cached workspace list so the dropdown always has options
 
 function mapType(type) {
   // types that we used in our product app
@@ -417,10 +382,20 @@ async function validateFreshservice() {
       value: loc.id,
       text: loc.name,
     }));
-    // ticket form: show workspace dropdown so user can pick workspace first
+    // ticket form renderig trigger
+    const ticketFormFields = await client.request.invokeTemplate(
+      "getAllTicketFields",
+      {
+        context: {
+          host: freshserviceDomain,
+          apikey: apikey,
+        },
+      },
+    );
     if (!isInEditConfig) {
-      // only runs at installation phase — show workspace dropdown first
-      await fetchAndRenderWorkspaces();
+      // only runs at installation phase
+      const ticketFields = JSON.parse(ticketFormFields.response).ticket_fields;
+      await renderTicketForm(ticketFields);
     }
   } catch (error) {
     console.log("Error in Freshservice validation", error);
@@ -766,6 +741,18 @@ async function autoLoginAndValidation(iparams) {
         value: loc.id,
         text: loc.name,
       }));
+      // ticket form renderig trigger
+      const ticketFormFields = await client.request.invokeTemplate(
+        "getAllTicketFields",
+        {
+          context: {
+            host: removeProtocol(iparams?.freshserviceDomain),
+            apikey: iparams?.freshserviceApikey,
+          },
+        },
+      );
+      const ticketFields = JSON.parse(ticketFormFields.response).ticket_fields;
+      await renderTicketForm(ticketFields);
       // get site and severity from superops
       const superopsDomain = iparams.superopsRegion === "us" ? "api" : "euapi";
       const url = superopsDomain + ".superops.ai";
@@ -789,29 +776,7 @@ async function autoLoginAndValidation(iparams) {
       tab.activeTabIndex = 3;
       ticketFormTab.disabled = false;
       showTicketFormLoader("Setting up ticket form…");
-      // Pre-populate workspace dropdown then restore ticket fields
-      await fetchAndRenderWorkspaces();
-      // Pre-select the saved workspace
-
-      if (iparams.ticketForm?.workspace_id) {
-        selectedWorkspaceId = String(iparams.ticketForm.workspace_id);
-        // const wsSelect = document.getElementById("ticketFormWorkspaceSelect");
-        console.log("ws select element", workspaceSelect, "selected workspace id", selectedWorkspaceId);
-        console.log("options", workspaceSelect?.options);
-        if (workspaceSelect?.options?.length) {
-          // isProgrammaticWorkspaceSet = true; // suppress fwChange wipe
-          // await workspaceSelect.setSelectedValues(selectedWorkspaceId);
-          workspaceSelect.value = selectedWorkspaceId; // directly set value to avoid fwChange event
-          console.log("test-0",workspaceSelect.value)
-          // console.log("isProgrammaticWorkspaceSet", isProgrammaticWorkspaceSet);
-        }
-        // isProgrammaticWorkspaceSet = false; // re-enable for user interaction
-        // Load fields for the saved workspace
-        await loadTicketFieldsForWorkspace(selectedWorkspaceId);
-      }
-      console.log("test-1",workspaceSelect.value)
       await populateTicketForm(iparams.ticketForm);
-      console.log("test-2", workspaceSelect.value)
       hideTicketFormLoader();
       tab.activeTabIndex = 4;
       toast.trigger({ type: "success", content: "Form saved successfully" });
@@ -2580,121 +2545,13 @@ function markMappingDirty() {
   validationChecklist.siteSeverityMapping = false;
 }
 
-async function fetchAndRenderWorkspaces() {
-  const wsSelect = document.getElementById("ticketFormWorkspaceSelect");
-  if (!wsSelect) return;
-
-  // Attach handler only once
-  // if (!wsSelect._handlerAttached) {
-  //   wsSelect.addEventListener("fwChange", async (e) => {
-  //     const newWorkspaceId = e.detail?.value || wsSelect.value;
-  //     if (!newWorkspaceId) return;
-  //     console.log("before reset",isProgrammaticWorkspaceSet);
-  //     // Skip the wipe-and-reload during programmatic pre-population
-  //     if (isProgrammaticWorkspaceSet) return;
-  //      console.log("after reset",isProgrammaticWorkspaceSet);
-  //     if (selectedWorkspaceId && String(selectedWorkspaceId) !== String(newWorkspaceId)) {
-  //       clearTicketFormFieldsDOM();
-  //       ticketForm = undefined;
-  //       formattedTicketForm = undefined;
-  //       validationChecklist.ticketForm = false;
-  //       if (saveFormButton) {
-  //         saveFormButton.disabled = false;
-  //         saveFormButton.textContent = "Save Form";
-  //       }
-  //     }
-  //     selectedWorkspaceId = newWorkspaceId;
-  //     await loadTicketFieldsForWorkspace(newWorkspaceId);
-  //   });
-  //   wsSelect._handlerAttached = true;
-  // }
-
-  showTicketFormLoader("Loading workspaces…");
-  try {
-    const fsDomain = removeProtocol(freshserviceDomainField?.value);
-    const fsApikey = freshserviceApikeyField?.value;
-    let freshserviceDomain = removeProtocol(fsDomain);
-    freshserviceDomain = freshserviceDomain.replace(/\.freshservice\.com$/, "").trim();
-    const res = await client.request.invokeTemplate("getFreshserviceWorkspace", {
-      context: { domain: freshserviceDomain, apikey: fsApikey },
-    });
-    const data = JSON.parse(res.response);
-    const workspaces = data.workspaces || [];
-    workspaceOptions = workspaces.map((w) => ({
-      value: String(w.id),
-      text: w.name,
-    }));
-    wsSelect.options = workspaceOptions;
-  } catch (err) {
-    console.error("Error fetching workspaces", err);
-    toast.trigger({ type: "error", content: "Failed to load workspaces" });
-  } finally {
-    hideTicketFormLoader();
-  }
-}
-
-async function loadTicketFieldsForWorkspace(workspaceId) {
-  // Fetch ticket fields for the given workspace and render the form
-  showTicketFormLoader("Loading ticket fields…");
-  // Remove old fields (keep workspace header)
-  clearTicketFormFieldsDOM();
-  try {
-    const fsDomain = removeProtocol(freshserviceDomainField?.value);
-    const fsApikey = freshserviceApikeyField?.value;
-    const res = await client.request.invokeTemplate("getAllTicketFields", {
-      context: { host: fsDomain, apikey: fsApikey, workspaceId },
-    });
-    const ticketFields = JSON.parse(res.response).ticket_fields;
-    await renderTicketForm(ticketFields);
-  } catch (err) {
-    console.error("Error loading ticket fields for workspace", err);
-    toast.trigger({ type: "error", content: "Failed to load ticket fields" });
-  } finally {
-    hideTicketFormLoader();
-  }
-}
-
-function clearTicketFormFieldsDOM() {
-  // Remove all field elements from ticketFormContainer except the workspace header
-  const container = document.getElementById("ticketFormContainer");
-  if (!container) return;
-  const header = document.getElementById("ticketFormWorkspaceHeader");
-  Array.from(container.children).forEach((child) => {
-    if (child !== header) child.remove();
-  });
-  saveFormButton = null;
-}
-
-function clearTicketFormFields() {
-  // Clear all input values without removing DOM (for when workspace changes)
-  const container = document.getElementById("ticketFormContainer");
-  if (!container) return;
-  container.querySelectorAll("fw-input[data-fieldname]").forEach((el) => { el.value = ""; });
-  container.querySelectorAll("fw-textarea[data-fieldname]").forEach((el) => { el.value = ""; });
-  container.querySelectorAll("fw-datepicker[data-fieldname]").forEach((el) => { el.value = ""; });
-  container.querySelectorAll("input[type='checkbox'][data-fieldname]").forEach((el) => { el.checked = false; });
-  container.querySelectorAll("fw-select[data-fieldname]").forEach((el) => { el.value = ""; });
-  container.querySelectorAll("input.async-search-input[data-fieldname]").forEach((el) => {
-    el.value = "";
-    el.dataset.value = "";
-  });
-}
-
-
-
 async function renderTicketForm(fields) {
   // called in iparams.js
   const container = document.getElementById("ticketFormContainer");
-  Array.from(container.children).forEach((child) => child.remove());
-  // after selective removal, restore the cached options on the fw-select so
-  // the workspace dropdown always has options to show when re-opened.
-  const wsSelect = document.getElementById("ticketFormWorkspaceSelect");
-  if (wsSelect && workspaceOptions.length) {
-    wsSelect.options = workspaceOptions;
-  }
+  container.innerHTML = "";
   // remove priority => severity-priority mapping is used in code block
   const filteredFields = fields.filter(
-    (f) => f.field_type !== "default_priority" && f.field_type !== "default_workspace"
+    (f) => f.field_type !== "default_priority",
   );
   // extract subject & description
   const subjectField = filteredFields.find(
@@ -3158,9 +3015,6 @@ function handleSaveForm() {
     return;
   }
   ticketForm = formData;
-  if (selectedWorkspaceId) {
-    ticketForm.workspace_id = selectedWorkspaceId;
-  }
   formattedTicketForm = buildFormattedFormData(formData);
   saveFormButton.disabled = true;
   saveFormButton.textContent = "Saved Form";
@@ -3344,3 +3198,4 @@ function getConfigs(iparams) {
   superopsApikeyField.value = iparams.superopsApikey;
   autoLoginAndValidation(iparams);
 }
+
