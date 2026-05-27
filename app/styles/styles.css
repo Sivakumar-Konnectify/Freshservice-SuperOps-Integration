@@ -1,0 +1,236 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  background: transparent;
+}
+
+.widget {
+  padding: 16px;
+}
+.view {
+  display: none;
+}
+.view.active {
+  display: block;
+}
+
+.section-label {
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #888;
+  margin-bottom: 10px;
+}
+
+/* Asset List */
+.asset-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.asset-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 12px;
+  background: #fff;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+}
+.asset-item:hover {
+  border-color: #bbb;
+  background: #f7f7f7;
+}
+
+.asset-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  background: #e8f0fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.asset-info {
+  flex: 1;
+  min-width: 0;
+}
+.asset-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+.asset-sub {
+  font-size: 11px;
+  color: #999;
+  margin-top: 1px;
+}
+
+.asset-chevron {
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+/* Detail View */
+.back-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  color: #666;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  margin-bottom: 16px;
+  font-family: inherit;
+}
+.back-btn:hover {
+  color: #1a1a1a;
+}
+
+.asset-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: #f7f7f7;
+  border-radius: 8px;
+  border: 0.5px solid #e0e0e0;
+  margin-bottom: 16px;
+}
+.asset-header-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 8px;
+  background: #e8f0fe;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.asset-header-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: #1a1a1a;
+}
+.asset-header-id {
+  font-size: 11px;
+  color: #999;
+  margin-top: 2px;
+}
+
+/* Action Buttons */
+.action-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 11px 14px;
+  background: #fff;
+  border: 0.5px solid #e0e0e0;
+  border-radius: 8px;
+  cursor: pointer;
+  transition:
+    border-color 0.15s,
+    background 0.15s;
+  text-align: left;
+  margin-bottom: 8px;
+  font-family: inherit;
+}
+.action-btn:hover {
+  border-color: #bbb;
+  background: #f7f7f7;
+}
+.action-btn.primary {
+  background: #e8f0fe;
+  border-color: #b3c8fc;
+}
+.action-btn.primary:hover {
+  background: #dce6fd;
+}
+
+.action-btn-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+.action-btn.primary .action-btn-icon {
+  background: rgba(66, 133, 244, 0.15);
+}
+.action-btn:not(.primary) .action-btn-icon {
+  background: #f0f0f0;
+}
+
+.action-btn-text {
+  flex: 1;
+  min-width: 0;
+}
+.action-btn-label {
+  font-size: 13px;
+  font-weight: 500;
+}
+.action-btn.primary .action-btn-label {
+  color: #1a56db;
+}
+.action-btn:not(.primary) .action-btn-label {
+  color: #1a1a1a;
+}
+.action-btn-sub {
+  font-size: 11px;
+  margin-top: 1px;
+  color: #999;
+}
+
+.action-btn-arrow {
+  color: #bbb;
+  flex-shrink: 0;
+}
+
+/* Loading & Error states */
+.message {
+  font-size: 13px;
+  color: #888;
+  text-align: center;
+  padding: 24px 0;
+}
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px 0;
+  font-size: 13px;
+  color: #888;
+}
+.spinner {
+  width: 14px;
+  height: 14px;
+  border: 1.5px solid #e0e0e0;
+  border-top-color: #4285f4;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

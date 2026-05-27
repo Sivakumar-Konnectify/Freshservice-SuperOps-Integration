@@ -1,0 +1,62 @@
+{
+  "platform-version": "3.1",
+  "modules": {
+    "common": {
+      "functions": {
+        "registerUser": {},
+        "authConnection": {},
+        "verifyLogin": {},
+        "updateKonnector": {},
+        "getAssetById": {}
+      },
+      "requests": {
+        "getAllTickets": {},
+        "getAssets": {},
+        "getFreshserviceAssetTypes": {},
+        "getFreshserviceAssetFields": {},
+        "getAdminAccessToken": {},
+        "getTenantToken": {},
+        "getFreshserviceWorkspace": {},
+        "getAssetById": {},
+        "getRequesters": {},
+        "getAgents": {},
+        "getAllTicketFields": {},
+        "getAgentById": {},
+        "getRequesterById": {},
+        "getAllSiteFromSuperops": {},
+        "getLocations": {}
+      },
+      "events": {
+        "onAppInstall": {
+          "handler": "onAppInstallCallback"
+        },
+        "onAppUninstall": {
+          "handler": "onAppUninstallCallback"
+        }
+      }
+    },
+    "service_ticket": {
+      "location": {
+        "ticket_sidebar": {
+          "url": "index.html",
+          "icon": "./styles/images/logo.svg"
+        }
+      },
+      "events": {
+        "onTicketUpdate": {
+          "handler": "onTicketUpdateCallback"
+        }
+      }
+    }
+  },
+  "engines": {
+    "node": "24.11.0",
+    "fdk": "10.1.1"
+  },
+  "dependencies": {
+    "axios": "0.20.0"
+  },
+  "scripts": {
+    "fdk-unit-test": "vitest run --coverage"
+  }
+}

@@ -1,0 +1,201 @@
+{
+    "getAllTickets": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "/api/v2/tickets",
+            "headers": {
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>"
+            }
+        }
+    },
+    "getAssets": {
+        "schema": {
+            "method": "POST",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "<%= context.path %>",
+            "headers": {
+                "Authorization": "Bearer <%= context.token %>",
+                "CustomerSubDomain": "<%= context.domain %>",
+                "Content-Type": "application/json"
+            }
+        }
+    },
+    "getFreshserviceAssetTypes": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%=context.host%>.freshservice.com",
+            "path": "/api/v2/asset_types",
+            "query": {
+                "per_page": "<%=context.perPage%>",
+                "page": "<%=context.page%>"
+            },
+            "headers": {
+                "Authorization": "Basic <%= encode(context.auth + ':x') %>",
+                "Content-Type": "application/json"
+            }
+        }
+    },
+    "getFreshserviceAssetFields": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%=context.host%>.freshservice.com",
+            "path": "/api/v2/asset_types/<%=context.typeId%>/fields",
+            "headers": {
+                "Authorization": "Basic <%= encode(context.auth + ':x') %>",
+                "Content-Type": "application/json"
+            }
+        }
+    },
+    "getAdminAccessToken": {
+        "schema": {
+            "method": "POST",
+            "protocol": "https",
+            "host": "<%= context.host %>.konnectifyapp.co",
+            "path": "/admin/api/auth/login/service",
+            "headers": {
+                "Content-Type": "application/json"
+            }
+        }
+    },
+    "getTenantToken": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>.konnectifyapp.co",
+            "path": "/admin/api/tenants/token",
+            "query": {
+                "id": "<%= context.tenantId %>"
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer <%= context.token %>"
+            }
+        }
+    },
+    "getFreshserviceWorkspace": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.domain %>.freshservice.com",
+            "path": "/api/v2/workspaces",
+            "query": {
+                "per_page": "30",
+                "page": "<%= context.currentPage %>"
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic <%= encode(context.auth + ':x') %>"
+            }
+        }
+    },
+    "getAssetById": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.domain %>",
+            "path": "/api/v2/assets/<%= context.assetId %>",
+            "headers": {
+                "Authorization": "Basic <%= encode(iparam.freshserviceApikey + ':X') %>",
+                "Content-Type": "application/json"
+            }
+        }
+    },
+    "getRequesters": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "/api/v2/requesters",
+            "query": {
+                "query": "<%= context.query %>",
+                "page": "<%= context.page %>"
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>"
+            }
+        }
+    },
+    "getAgents": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "/api/v2/agents",
+            "query": {
+                "query": "<%= context.query %>",
+                "page": "<%= context.page %>"
+            },
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>"
+            }
+        }
+    },
+    "getAllTicketFields": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "/api/v2/ticket_form_fields",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>"
+            }
+        }
+    },
+    "getRequesterById": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "/api/v2/requesters/<%= context.requesterId %>",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>"
+            }
+        }
+    },
+    "getAgentById": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "/api/v2/agents/<%= context.agentId %>",
+            "headers": {
+                "Content-Type": "application/json",
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>"
+            }
+        }
+    },
+    "getAllSiteFromSuperops": {
+        "schema": {
+            "method": "POST",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "<%= context.path %>",
+            "headers": {
+                "Content-Type": "application/json",
+                "CustomerSubDomain": "<%= context.domain %>",
+                "Authorization": "Bearer <%= context.token %>"
+            }
+        }
+    },
+    "getLocations": {
+        "schema": {
+            "method": "GET",
+            "protocol": "https",
+            "host": "<%= context.host %>",
+            "path": "/api/v2/locations",
+            "headers": {
+                "Authorization": "Basic <%= encode(context.apikey + ':x') %>",
+                "Content-Type": "application/json"
+            }
+        }
+    }
+}

@@ -1,0 +1,46 @@
+
+      --------------------------------------
+      Error Stack:: "AxiosError: Request failed with status code 401\n\tat Pe (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:353380)\n\tat IncomingMessage.<anonymous> (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:365250)\n\tat IncomingMessage.emit (node:events:531:35)\n\tat endReadableNT (node:internal/streams/readable:1698:12)\n\tat process.processTicksAndRejections (node:internal/process/task_queues:89:21)"
+      Error Message:: "Request failed with status code 401"
+      Error Name:: "AxiosError"
+      Request ID:: ca6934b5-d6e4-48fe-8f48-6f26616a9a87
+      
+      Env:: release
+      API Route:: /api/v1/copilot/migration_scope
+      API Response Message:: Invalid token
+      API Response Error Type:: unauthorized
+
+      Timestamp:: Tue, 26 May 2026 07:41:11 GMT
+      Extension Version:: 2.8.4
+      --------------------------------------
+    
+      --------------------------------------
+      Error Stack:: "Error: \u001b[31m[ERROR]\u001b[0m  Node.js version of 24.11.x is required to run this SDK. v18.16.0 found.\n\n\tat /Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:239308\n\tat new Promise (<anonymous>)\n\tat l.spawnSync (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:239012)\n\tat t.FdkHelper.runInBackground (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:254662)\n\tat process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n\tat async t.FdkHelper.getFdkVersion (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:250196)\n\tat async v.getFdkVersion (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:321486)\n\tat async v.resolveWebviewView (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:295987)\n\tat async oP.$resolveWebviewView (file:///Users/sivakumar/Desktop/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/api/node/extensionHostProcess.js:641:116863)"
+      Error Message:: "\u001b[31m[ERROR]\u001b[0m  Node.js version of 24.11.x is required to run this SDK. v18.16.0 found.\n"
+      Error Name:: "Error"
+      
+      
+      
+      
+      
+      
+
+      Timestamp:: Tue, 26 May 2026 07:41:13 GMT
+      Extension Version:: 2.8.4
+      --------------------------------------
+    
+      --------------------------------------
+      Error Stack:: "Error: \u001b[31m[ERROR]\u001b[0m  Node.js version of 24.11.x is required to run this SDK. v18.16.0 found.\n\n\tat /Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:239308\n\tat new Promise (<anonymous>)\n\tat l.spawnSync (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:239012)\n\tat t.FdkHelper.runInBackground (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:254662)\n\tat process.processTicksAndRejections (node:internal/process/task_queues:103:5)\n\tat async t.FdkHelper.getFdkVersion (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:250080)\n\tat async v.getFdkVersion (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:321486)\n\tat async v.resolveWebviewView (/Users/sivakumar/.vscode/extensions/freshworksmarketplace.freddy-copilot-2.8.4/dist/extension.js:2:295987)\n\tat async oP.$resolveWebviewView (file:///Users/sivakumar/Desktop/Visual%20Studio%20Code.app/Contents/Resources/app/out/vs/workbench/api/node/extensionHostProcess.js:641:116863)"
+      Error Message:: "\u001b[31m[ERROR]\u001b[0m  Node.js version of 24.11.x is required to run this SDK. v18.16.0 found.\n"
+      Error Name:: "Error"
+      
+      
+      
+      
+      
+      
+
+      Timestamp:: Tue, 26 May 2026 07:41:12 GMT
+      Extension Version:: 2.8.4
+      --------------------------------------
+    
