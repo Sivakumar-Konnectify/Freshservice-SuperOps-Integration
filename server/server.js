@@ -167,7 +167,7 @@ exports = {
 
   onAppUninstallCallback: async function (options) {
     try {
-      const connectorData = await getConnectorDetails(options);
+      const connectorData = await getConnectorDetails(options, options.iparams?.accessToken); // new
       const hasConnectors = connectorData.hasConnectors;
       if (hasConnectors) {
         const connectorStatuses = connectorData.connectors;
@@ -183,7 +183,7 @@ exports = {
       }
       renderData(null, {});
     } catch (error) {
-      console.log("Error in uninstall", error.response);
+      console.log("Error in uninstall", error.response || error);
       renderData({ error: 400, message: "On app uninstall failed" });
     }
   },
@@ -547,7 +547,8 @@ async function createNewConnectors(options) {
   }
 }
 
-async function getConnectorDetails(options, adminToken) {
+async function getConnectorDetails(options, adminToken="") {
+  console.log("--------->  get connector fn called");
   try {
     let adminAccessToken;
     // fetch connector ids from DB
@@ -555,6 +556,7 @@ async function getConnectorDetails(options, adminToken) {
       $db.get("assetConnector"),
       $db.get("alertConnector"),
     ]);
+    console.log("assetConnectors", alertConnectors);
     // extract IDs safely
     const konnectorIds = [
       assetConnectors?.newAssetId,
@@ -563,12 +565,14 @@ async function getConnectorDetails(options, adminToken) {
       alertConnectors?.alertResolvedConnectorId,
       alertConnectors?.resolveAlertOnTicketChangeConnectorId,
     ].filter(Boolean);
+    console.log("connector ids", konnectorIds);
     if (konnectorIds.length === 0) {
       console.log("No connectors found to deactivate");
       return { hasConnectors: false };
     }
     // if admin token is not passed in args then get it from api
     if (!adminToken) {
+      console.log("no token")
       const tokenResponse = await $request.invokeTemplate(
         "getAdminAccessToken",
         {
@@ -590,6 +594,8 @@ async function getConnectorDetails(options, adminToken) {
       throw new Error("Failed to fetch admin access token");
     }
     const headers = setHeader(adminAccessToken);
+    console.log(headers);
+    // console.log(`https://${options.iparams.domain}${rootDomain}/admin/api/konnectors/${id}`)
     // find the active connector and fetch their id - if we try to deactivate the already deactivated connector we get error
     const connectorResponses = await Promise.all(
       konnectorIds.map((id) =>
@@ -609,7 +615,7 @@ async function getConnectorDetails(options, adminToken) {
       connectorIdsFromDB: konnectorIds,
     };
   } catch (error) {
-    console.log("Failed to fetch all connector", error.response);
+    console.log("Failed to fetch all connector", error.response || error.message || error);
     throw error;
   }
 }

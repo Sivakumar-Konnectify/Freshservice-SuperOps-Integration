@@ -2,217 +2,243 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Freshservice-Superops</title>
-    <!-- crayons -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/css/crayons-min.css" />
-    <!-- Toastify -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
-    <!-- iparams stylesheet -->
-    <link rel="stylesheet" href="./assets/style/iparams.css" />
-    <!-- freshworks app client -->
-    <script src="https://cdn.freshdev.io/assets/app-client@2.js"></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Freshservice-Superops</title>
+  <!-- crayons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/css/crayons-min.css" />
+  <!-- Toastify -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css" />
+  <!-- iparams stylesheet -->
+  <link rel="stylesheet" href="./assets/style/iparams.css" />
+  <!-- freshworks app client -->
+  <script src="https://cdn.freshdev.io/assets/app-client@2.js"></script>
 </head>
 
 <body>
-    <!-- toast -->
-    <fw-toast id="toast-msg" position="top-right"></fw-toast>
+  <!-- toast -->
+  <fw-toast id="toast-msg" position="top-right"></fw-toast>
 
-    <!-- tabs -->
-    <fw-tabs id="tabs">
-        <fw-tab slot="tab" panel="freshservice" id="freshservice-tab">Freshservice</fw-tab>
-        <fw-tab slot="tab" panel="superops" id="superops-tab" disabled>Superops</fw-tab>
-        <fw-tab slot="tab" panel="fieldMapping" id="field-mapping-tab" disabled>Asset Mapping</fw-tab>
-        <fw-tab slot="tab" panel="siteMapping" id="site-mapping-tab" disabled>Site & Severity Mapping</fw-tab>
-        <fw-tab slot="tab" panel="ticketForm" id="ticket-form-tab" disabled>Ticket Form</fw-tab>
+  <!-- tabs -->
+  <fw-tabs id="tabs">
+    <fw-tab slot="tab" panel="freshservice" id="freshservice-tab">Connect Freshservice</fw-tab>
+    <fw-tab slot="tab" panel="superops" id="superops-tab" disabled>Connect Superops</fw-tab>
+    <fw-tab slot="tab" panel="fieldMapping" id="field-mapping-tab" disabled>Asset Sync Configuration</fw-tab>
+    <fw-tab slot="tab" panel="ticketForm" id="ticket-form-tab" disabled>Alert Sync Configuration</fw-tab>
 
-        <!-- fershservice credentials tab -->
-        <fw-tab-panel name="freshservice">
-            <div class="tab-area">
-                <!-- freshservice domain -->
-                <fw-input label="Domain" icon-left="portal" hint-text="Please enter your freshservice domain"
-                    name="domain" warning-text="Domain field should not be empty" type="email"
-                    --fw-font-family="'Open Sans', 'Helvetica Neue', sans-serif"
-                    placeholder="https://domain.freshservice.com" required clear-input id="fs-domain"
-                     >
-                </fw-input>
+    <!-- freshservice credentials tab -->
+    <fw-tab-panel name="freshservice">
+      <div class="tab-area">
+        <!-- freshservice domain -->
+        <fw-input label="Domain" icon-left="portal" hint-text="Please enter your freshservice domain"
+          name="domain" warning-text="Domain field should not be empty" type="email"
+          --fw-font-family="'Open Sans', 'Helvetica Neue', sans-serif"
+          placeholder="https://domain.freshservice.com" required clear-input id="fs-domain"
+        >
+        </fw-input> <br/>
 
-                <!-- freshservice apikey -->
-                <div id="fs-apikey-container">
-                    <fw-input label="API Key" icon-left="password" hint-text="Please enter your freshservice API key"
-                        error-text="API key field should not be empty" type="password" name="apikey"
-                        placeholder="*************" required clear-input id="fs-apikey">
-                        <fw-icon name="hidden" slot="input-suffix" id="fs-apikey-icon" class="password-icon"></fw-icon>
-                    </fw-input> <br />
-                    <a href="https://support.freshservice.com/support/solutions/articles/50000000306-where-do-i-find-my-api-key-"
-                        target="_blank" class="links">
-                        Where can i find the API key ?
-                    </a>
-                </div> <br />
+        <!-- freshservice apikey -->
+        <div id="fs-apikey-container">
+          <fw-input label="API Key" icon-left="password" hint-text="Please enter your freshservice API key"
+            error-text="API key field should not be empty" type="password" name="apikey"
+            placeholder="*************" required clear-input id="fs-apikey">
+            <fw-icon name="hidden" slot="input-suffix" id="fs-apikey-icon" class="password-icon"></fw-icon>
+          </fw-input> <br />
+          <a href="https://support.freshservice.com/support/solutions/articles/50000000306-where-do-i-find-my-api-key-"
+            target="_blank" class="links">
+            Where can i find the API key ?
+          </a>
+        </div> <br />
 
-                <!-- freshservice validation button -->
-                <fw-button id="fs-validate-btn">Validate</fw-button>
+        <!-- freshservice validation button -->
+        <fw-button id="fs-validate-btn">Validate</fw-button>
+      </div>
+    </fw-tab-panel>
+
+    <!-- superops credentials tab -->
+    <fw-tab-panel name="superops">
+      <div class="tab-area">
+        <!-- superops domain -->
+        <fw-input label="Domain" icon-left="text" hint-text="Enter your Superops domain"
+          warning-text="Domain field should not be empty" error-text="Invalid Domain"
+          placeholder="Enter your superops domain" required clear-input id="superops-domain">
+        </fw-input> <br />
+
+        <!-- superops apikey -->
+        <fw-input label="API key" icon-left="password" hint-text="Enter your Superops API key"
+          warning-text="API key field should not be empty" error-text="Invalid user ID"
+          placeholder="****************************" required clear-input id="superops-apikey"
+          type="password">
+          <fw-icon name="hidden" slot="input-suffix" id="superops-apikey-hide-icon"
+            class="password-icon"></fw-icon>
+        </fw-input> <br />
+
+        <!-- region -->
+        <fw-select label="Region" required="true" placeholder="EU"
+          hint-text="Select your Superops data center region"
+          warning-text="Data center region should not be empty" id="superops-region">
+          <fw-select-option value="eu">EU</fw-select-option>
+          <fw-select-option value="us">US</fw-select-option>
+        </fw-select> <br />
+
+        <!-- superops validation button -->
+        <fw-button color="primary" id="superopsValidateBtn"> Validate </fw-button>
+      </div>
+    </fw-tab-panel>
+
+    <!-- asset field mapping tab -->
+    <fw-tab-panel name="fieldMapping">
+      <div class="tab-area">
+        <div class="page">
+
+          <!-- since date selector -->
+          <div class="fm-config-field">
+            <fw-datepicker display-format="dd-MM-yyyy" id="since-date" label="Since" required
+              hint-text="Choose a start date to import historical assets from SuperOps into Freshservice">
+            </fw-datepicker>
+          </div>
+
+          <div class="fm-divider"></div>
+
+          <!-- ══════════════════════════════════════════════════
+               SITE → LOCATION MAPPING  (moved from tab 4)
+          ══════════════════════════════════════════════════ -->
+          <div class="inline-mapping-section" id="siteLocationMappingSection">
+            <div class="inline-mapping-header">
+              <div>
+                <h5 class="inline-section-title">SuperOps Site → Freshservice Location</h5>
+                <p class="inline-section-subtitle">When syncing assets from SuperOps to Freshservice, the configured Site-Location mapping will be applied automatically. Location in Freshservice is equivalent to Site in SuperOps.</p>
+              </div>
+              <fw-button id="addSiteMappingBtn" class="add-mapping-btn" color="secondary" size="small">
+                <fw-icon name="plus" slot="before-label"></fw-icon>
+                Add Site Mapping
+              </fw-button>
             </div>
 
-        </fw-tab-panel>
-
-        <!-- superops credentials tab -->
-        <fw-tab-panel name="superops">
-            <div class="tab-area">
-                <!-- superops domain -->
-                <fw-input label="Domain" icon-left="text" hint-text="Enter your Superops domain"
-                    warning-text="Domain field should not be empty" error-text="Invalid Domain"
-                    placeholder="Enter your superops domain" required clear-input id="superops-domain">
-                </fw-input> <br />
-
-                <!-- superops apikey -->
-                <fw-input label="API key" icon-left="password" hint-text="Enter your Superops API key"
-                    warning-text="API key field should not be empty" error-text="Invalid user ID"
-                    placeholder="****************************" required clear-input id="superops-apikey"
-                    type="password">
-                    <fw-icon name="hidden" slot="input-suffix" id="superops-apikey-hide-icon"
-                        class="password-icon"></fw-icon>
-                </fw-input> <br />
-
-                <!-- region -->
-                <fw-select label="Region" required="true" placeholder="EU"
-                    hint-text="Select your Superops data center region"
-                    warning-text="Data center region should not be empty" id="superops-region">
-                    <fw-select-option value="eu">EU</fw-select-option>
-                    <fw-select-option value="us">US</fw-select-option>
-                </fw-select> <br />
-
-                <!-- superops validation button -->
-                <fw-button color="primary" id="superopsValidateBtn"> Validate </fw-button>
+            <div id="siteMappingContainer" class="inline-mapping-container">
+              <!-- Rows injected here -->
             </div>
 
-        </fw-tab-panel>
-
-        <!-- asset field mapping tab -->
-        <fw-tab-panel name="fieldMapping">
-            <div class="tab-area">
-
-                <div class="page">
-                    <!-- since date selector -->
-                    <div class="fm-config-field">
-                        <fw-datepicker display-format="dd-MM-yyyy" id="since-date" label="Since" required
-                            hint-text="Assets created from this date will be synced">
-                        </fw-datepicker>
-                    </div>
-
-                    <div class="fm-divider"></div>
-                    <!-- field mapping -->
-                    <div class="section-head">
-                        <div>
-                            <span class="section-title">Asset Field Mapping</span>
-                            <span class="pair-count" id="pair-count">0</span>
-                        </div>
-                        <fw-button color="primary" size="small" id="add-btn">+ Add Asset Mapping</fw-button>
-                    </div>
-
-                    <div id="empty-state">
-                        <div class="ei">⇄</div>
-                        <div class="et">No asset mappings configured</div>
-                        <div class="es">Link a SuperOps asset class with a Freshservice asset type and map their fields
-                        </div>
-                    </div>
-
-                    <div id="pair-list"></div>
-
-
-                    <div id="val-section">
-                        <div class="d-btns">
-                            <div class="verr-list" id="verr-list"></div>
-                            <fw-button color="primary" id="validate-btn">Save Mappings</fw-button>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="modal-bg" id="del-modal">
-                    <div class="modal-box">
-                        <h3>Remove Mapping?</h3>
-                        <p id="del-msg">This will permanently remove this asset mapping.</p>
-                        <div class="modal-acts">
-                            <fw-button color="secondary" size="small" id="del-cancel">Cancel</fw-button>
-                            <fw-button color="danger" size="small" id="del-confirm">Remove</fw-button>
-                        </div>
-                    </div>
-                </div>
-
-                <fw-toast id="toast" position="top-center"></fw-toast>
-
+            <div id="siteMappingEmpty" class="inline-empty-state" style="display:none;">
+              <span class="inline-empty-icon">⇄</span>
+              <span class="inline-empty-text">No site mappings configured yet</span>
             </div>
 
-        </fw-tab-panel>
-
-        <!-- site mapping tab -->
-        <fw-tab-panel name="siteMapping">
-            <div class="tab-area">
-                <!-- Header Section -->
-                <div class="mapping-header">
-                    <p class="mapping-subtitle">Map SuperOps sites to Freshservice locations and severities to
-                        priorities</p>
-                </div>
-
-                <!-- Site Mapping Section -->
-                <div class="mapping-section">
-                    <h5 class="section-title">SuperOps Site → Freshservice Location</h5>
-                    <div id="siteMappingContainer" class="mapping-container">
-                        <!-- Rows will be dynamically added here -->
-                    </div>
-                    <fw-button id="addSiteMappingBtn" class="add-mapping-btn" color="secondary">
-                        <fw-icon name="plus" slot="before-label"></fw-icon>
-                        Add Site Mapping
-                    </fw-button>
-                </div>
-
-                <!-- Severity Mapping Section -->
-                <div class="mapping-section">
-                    <h5 class="section-title">SuperOps Severity → Freshservice Priority</h5>
-                    <div id="severityMappingContainer" class="mapping-container">
-                        <!-- Rows will be dynamically added here -->
-                    </div>
-                    <fw-button id="addSeverityMappingBtn" class="add-mapping-btn" color="secondary">
-                        <fw-icon name="plus" slot="before-label"></fw-icon>
-                        Add Severity Mapping
-                    </fw-button>
-                </div>
-
+            <div class="inline-mapping-actions">
+              <fw-button color="primary" size="small" id="saveSiteMappingButton" style="display:none;">Save Site Mappings</fw-button>
             </div>
+          </div>
 
-            <!-- Save Button -->
-            <div class="save-button-container">
-                <fw-button id="saveSiteServerityMappingButton" color="primary" expand>Save Mappings</fw-button>
+          <div class="fm-divider"></div>
+
+          <!-- field mapping section -->
+          <div class="section-head">
+            <div>
+              <span class="section-title">Asset Field Mapping</span>
+              <span class="pair-count" id="pair-count">0</span>
             </div>
-        </fw-tab-panel>
+            <fw-button color="primary" size="small" id="add-btn">+ Add Asset Mapping</fw-button>
+          </div>
 
-        <!-- ticket form -->
-        <fw-tab-panel name="ticketForm">
-            <div class="tab-area">
+          <div>
+            <p class="inline-section-subtitle">Select a SuperOps Asset Class and its equivalent Freshservice Asset Type, then map the fields between them. The configured mapping will be applied during asset synchronization.</p>
+          </div> <br/>
 
-                <!-- workspace select element comes here -->
-                <div id="ticketFormWorkspaceHeader" style="margin-bottom: 16px;">
-                    <fw-select id="ticketFormWorkspaceSelect" label="Workspace" placeholder="Select a workspace" style="width:100%;">
-                    </fw-select>
-                </div>
+          <div id="empty-state">
+            <div class="ei">⇄</div>
+            <div class="et">No asset mappings configured</div>
+            <div class="es">Link a SuperOps asset class with a Freshservice asset type and map their fields</div>
+          </div>
 
-                <div id="ticketFormContainer">
+          <div id="pair-list"></div>
 
-                </div>
-
+          <div id="val-section">
+            <div class="d-btns">
+              <div class="verr-list" id="verr-list"></div>
+              <fw-button color="primary" id="validate-btn">Save Mappings</fw-button>
             </div>
-        </fw-tab-panel>
+          </div>
 
-    </fw-tabs>
-    
-    <!-- crayons -->
-    <script type="module"
-        src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
-    <script nomodule src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
-    <!-- iparams js file  -->
-    <script src="./assets/scripts/iparams.js"></script> 
+        </div>
+
+        <!-- delete confirmation modal -->
+        <div class="modal-bg" id="del-modal">
+          <div class="modal-box">
+            <h3>Remove Mapping?</h3>
+            <p id="del-msg">This will permanently remove this asset mapping.</p>
+            <div class="modal-acts">
+              <fw-button color="secondary" size="small" id="del-cancel">Cancel</fw-button>
+              <fw-button color="danger" size="small" id="del-confirm">Remove</fw-button>
+            </div>
+          </div>
+        </div>
+
+        <fw-toast id="toast" position="top-center"></fw-toast>
+      </div>
+    </fw-tab-panel>
+
+    <!-- ticket form tab -->
+    <fw-tab-panel name="ticketForm">
+      <div class="tab-area">
+
+      <!-- General description -->
+      <p class="inline-section-subtitle">
+        When an alert is created in SuperOps, a ticket is automatically created in Freshservice. The values configured below will be used to populate the ticket fields during ticket creation.
+      </p> <br/>
+
+       <!-- ══════════════════════════════════════════════════
+             SEVERITY → PRIORITY MAPPING  (moved from tab 4)
+        ══════════════════════════════════════════════════ -->
+        <div class="inline-mapping-section" id="severityPriorityMappingSection">
+          <div class="inline-mapping-header">
+            <div>
+              <h5 class="inline-section-title">SuperOps Severity → Freshservice Priority</h5>
+              <p class="inline-section-subtitle">Map SuperOps severities to Freshservice priorities. This mapping is used when creating Freshservice tickets from SuperOps alerts.</p>
+            </div>
+            <fw-button id="addSeverityMappingBtn" class="add-mapping-btn" color="secondary" size="small">
+              <fw-icon name="plus" slot="before-label"></fw-icon>
+              Add Severity Mapping
+            </fw-button>
+          </div>
+
+          <div id="severityMappingContainer" class="inline-mapping-container">
+            <!-- Rows injected here -->
+          </div>
+
+          <div id="severityMappingEmpty" class="inline-empty-state" style="display:none;">
+            <span class="inline-empty-icon">⇄</span>
+            <span class="inline-empty-text">No severity mappings configured yet</span>
+          </div>
+
+          <div class="inline-mapping-actions">
+            <fw-button color="primary" size="small" id="saveSeverityMappingButton" style="display:none;">Save Severity Mappings</fw-button>
+          </div>
+        </div>
+
+        <div class="fm-divider"></div>
+
+        <!-- workspace selector -->
+        <div id="ticketFormWorkspaceHeader" style="margin-bottom: 16px;">
+          <fw-select id="ticketFormWorkspaceSelect" label="Workspace" placeholder="Select a workspace"
+           style="width:100%;" hint-text="Once a workspace is selected, the relevant ticket fields will be displayed below for configuration"></fw-select>
+        </div>
+
+       
+
+        <!-- ticket form fields container -->
+        <div id="ticketFormContainer"></div>
+
+      </div>
+    </fw-tab-panel>
+
+  </fw-tabs>
+
+  <!-- crayons -->
+  <script type="module"
+    src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.esm.js"></script>
+  <script nomodule src="https://cdn.jsdelivr.net/npm/@freshworks/crayons@v4/dist/crayons/crayons.js"></script>
+  <!-- iparams js file -->
+  <script src="./assets/scripts/iparams.js"></script>
 </body>
 
 </html>

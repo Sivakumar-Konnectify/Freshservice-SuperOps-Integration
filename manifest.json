@@ -49,15 +49,12 @@
       }
     }
   },
-  "engines": {
-    "node": "24.11.0",
-    "fdk": "10.1.1"
+ "engines": {
+    "node": "18.16.0",
+    "fdk": "9.8.2"
   },
   "dependencies": {
     "axios": "0.20.0"
-  },
-  "scripts": {
-    "fdk-unit-test": "vitest run --coverage"
   },
   "app": {
     "tracking_id": "upi1pdvwyaispc212ev4"
